@@ -103,7 +103,8 @@ TYPED_TEST(PriorBoxLayerTest, TestSetupAspectRatio1) {
   prior_box_param->add_max_size(this->max_size_);
   prior_box_param->add_aspect_ratio(1.);
   prior_box_param->add_aspect_ratio(2.);
-  prior_box_param->set_flip(false);
+  prior_box_param->add_flip(false);
+  prior_box_param->add_flip(false);
   PriorBoxLayer<TypeParam> layer(layer_param);
   layer.SetUp(this->blob_bottom_vec_, this->blob_top_vec_);
   EXPECT_EQ(this->blob_top_->num(), 1);
@@ -119,7 +120,8 @@ TYPED_TEST(PriorBoxLayerTest, TestSetupAspectRatioNoFlip) {
   prior_box_param->add_max_size(this->max_size_);
   prior_box_param->add_aspect_ratio(2.);
   prior_box_param->add_aspect_ratio(3.);
-  prior_box_param->set_flip(false);
+  prior_box_param->add_flip(false);
+  prior_box_param->add_flip(false);
   PriorBoxLayer<TypeParam> layer(layer_param);
   layer.SetUp(this->blob_bottom_vec_, this->blob_top_vec_);
   EXPECT_EQ(this->blob_top_->num(), 1);
@@ -135,6 +137,8 @@ TYPED_TEST(PriorBoxLayerTest, TestSetupAspectRatio) {
   prior_box_param->add_max_size(this->max_size_);
   prior_box_param->add_aspect_ratio(2.);
   prior_box_param->add_aspect_ratio(3.);
+  prior_box_param->add_flip(true);
+  prior_box_param->add_flip(true);
   PriorBoxLayer<TypeParam> layer(layer_param);
   layer.SetUp(this->blob_bottom_vec_, this->blob_top_vec_);
   EXPECT_EQ(this->blob_top_->num(), 1);
@@ -152,6 +156,8 @@ TYPED_TEST(PriorBoxLayerTest, TestSetupAspectRatioMultiSize) {
   prior_box_param->add_max_size(this->max_size_ + 10);
   prior_box_param->add_aspect_ratio(2.);
   prior_box_param->add_aspect_ratio(3.);
+  prior_box_param->add_flip(true);
+  prior_box_param->add_flip(true);
   PriorBoxLayer<TypeParam> layer(layer_param);
   layer.SetUp(this->blob_bottom_vec_, this->blob_top_vec_);
   EXPECT_EQ(this->blob_top_->num(), 1);
@@ -310,7 +316,7 @@ TYPED_TEST(PriorBoxLayerTest, TestCPUAspectRatioNoFlip) {
   prior_box_param->add_min_size(this->min_size_);
   prior_box_param->add_max_size(this->max_size_);
   prior_box_param->add_aspect_ratio(2.);
-  prior_box_param->set_flip(false);
+  prior_box_param->add_flip(false);
   PriorBoxLayer<TypeParam> layer(layer_param);
   layer.SetUp(this->blob_bottom_vec_, this->blob_top_vec_);
   layer.Forward(this->blob_bottom_vec_, this->blob_top_vec_);
@@ -358,6 +364,7 @@ TYPED_TEST(PriorBoxLayerTest, TestCPUAspectRatio) {
   prior_box_param->add_min_size(this->min_size_);
   prior_box_param->add_max_size(this->max_size_);
   prior_box_param->add_aspect_ratio(2.);
+  prior_box_param->add_flip(true);
   PriorBoxLayer<TypeParam> layer(layer_param);
   layer.SetUp(this->blob_bottom_vec_, this->blob_top_vec_);
   layer.Forward(this->blob_bottom_vec_, this->blob_top_vec_);
@@ -417,6 +424,7 @@ TYPED_TEST(PriorBoxLayerTest, TestCPUAspectRatioMultiSize) {
   prior_box_param->add_max_size(this->max_size_);
   prior_box_param->add_max_size(this->max_size_ + 9);
   prior_box_param->add_aspect_ratio(2.);
+  prior_box_param->add_flip(true);
   prior_box_param->set_clip(true);
   PriorBoxLayer<TypeParam> layer(layer_param);
   layer.SetUp(this->blob_bottom_vec_, this->blob_top_vec_);
@@ -495,6 +503,7 @@ TYPED_TEST(PriorBoxLayerTest, TestCPUFixStep) {
   prior_box_param->add_min_size(this->min_size_);
   prior_box_param->add_max_size(this->max_size_);
   prior_box_param->add_aspect_ratio(2.);
+  prior_box_param->add_flip(true);
   prior_box_param->set_img_size(100);
   prior_box_param->set_step(10);
   PriorBoxLayer<TypeParam> layer(layer_param);

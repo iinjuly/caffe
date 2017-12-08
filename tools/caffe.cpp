@@ -178,6 +178,7 @@ caffe::SolverAction::Enum GetRequestedAction(
 
 // Train / Finetune a model.
 int train() {
+  LOG(INFO) << "injuly-caffe: remove 1/3 aspect-ratio.";
   CHECK_GT(FLAGS_solver.size(), 0) << "Need a solver definition to train.";
   CHECK(!FLAGS_snapshot.size() || !FLAGS_weights.size())
       << "Give a snapshot to resume training or weights to finetune "

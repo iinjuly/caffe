@@ -295,7 +295,7 @@ class MultiBoxLossLayerTest : public MultiDeviceTest<TypeParam> {
     prior_box_param->add_min_size(5);
     prior_box_param->add_max_size(10);
     prior_box_param->add_aspect_ratio(3.);
-    prior_box_param->set_flip(true);
+    prior_box_param->add_flip(true);
 
     PriorBoxLayer<Dtype> prior_layer(layer_param);
     fake_bottom_vec.clear();

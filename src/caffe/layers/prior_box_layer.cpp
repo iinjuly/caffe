@@ -19,7 +19,12 @@ void PriorBoxLayer<Dtype>::LayerSetUp(const vector<Blob<Dtype>*>& bottom,
   }
   aspect_ratios_.clear();
   aspect_ratios_.push_back(1.);
-  flip_ = prior_box_param.flip();
+  CHECK_EQ(prior_box_param.flip_size(),prior_box_param.aspect_ratio_size()) 
+      << "flip_size must equal to aspect_ratio_size.";
+  for(int i =0; i<prior_box_param.flip_size();++i){
+      flip_.push_back(prior_box_param.flip(i));
+  }
+  //flip_ = prior_box_param.flip();
   for (int i = 0; i < prior_box_param.aspect_ratio_size(); ++i) {
     float ar = prior_box_param.aspect_ratio(i);
     bool already_exist = false;
@@ -31,7 +36,7 @@ void PriorBoxLayer<Dtype>::LayerSetUp(const vector<Blob<Dtype>*>& bottom,
     }
     if (!already_exist) {
       aspect_ratios_.push_back(ar);
-      if (flip_) {
+      if (prior_box_param.flip(i)) {
         aspect_ratios_.push_back(1./ar);
       }
     }
